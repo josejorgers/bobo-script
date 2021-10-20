@@ -1,0 +1,8 @@
+name: bobo-script
+channels:
+- defaults
+dependencies:
+- python=3.10.*
+- pip=21.2.*
+- pip:
+  - -r requirements.txt
