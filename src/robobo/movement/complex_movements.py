@@ -4,6 +4,7 @@ from robobopy.utils.IR import IR
 
 from constants.sesors_config import DISTANCE_CLOSE, DISTANCE_MEDIUM, DISTANCE_FAR
 from robobo.movement.simple_movements import diagonal_movement, move_backward, move_forward, turn_left, turn_right
+from robobo.emotions import obstacle_appears
 
 def without_crashing(fn):
 
@@ -11,6 +12,9 @@ def without_crashing(fn):
         robot.setLedColorTo(LED.All, Color.OFF)
 
         fn(robot, *args, **kwargs)
+
+        if 'time' in kwargs.keys():
+            return
 
         while robot.readIRSensor(IR.FrontC) < DISTANCE_FAR and\
                 robot.readIRSensor(IR.FrontRR) < DISTANCE_FAR and\
@@ -35,6 +39,9 @@ def without_crashing(fn):
 
         robot.stopMotors()
         robot.setLedColorTo(LED.All, Color.RED)
+
+        obstacle_appears(robot)
+
 
     return wrapper
 
