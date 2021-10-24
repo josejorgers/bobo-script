@@ -8,7 +8,11 @@ from constants.connections import LOCAL
 robot = Robobo(LOCAL)
 robot.connect()
 
-no_crashing_movements.no_crash_move_forward(robot, 10)
+simple_movements.turn_left(robot, 20, time=1)
+simple_movements.move_forward(robot, 20, time=2)
+simple_movements.turn_right(robot, 20, time=1)
+
+no_crashing_movements.no_crash_move_forward(robot, 20)
 
 no_crashing_movements.no_crash_turn_right(robot, 20, time=1)
 
