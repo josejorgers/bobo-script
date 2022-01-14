@@ -1,14 +1,13 @@
-from robobo.movement import simple_movements, complex_movements
 from robobopy.Robobo import Robobo
 from constants.connections import LOCAL
+from subsumed_architecture.states.implementations import MoveForward
+from subsumed_architecture.augmented_fsm import AugmentedFSM
 
 robot = Robobo(LOCAL)
 robot.connect()
 
-simple_movements.move_forward(robot, 20, 4)
+initial_state = MoveForward(robot)
 
-simple_movements.stop(robot)
+state_machine = AugmentedFSM([initial_state])
 
-
-
-
+state_machine.run()
