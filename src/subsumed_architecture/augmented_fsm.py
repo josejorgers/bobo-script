@@ -7,6 +7,7 @@ class FSM:
     def __init__(self, subsumed_states: set, initial_state: State):
         self.subsumed_states = subsumed_states
         self.current_state = initial_state
+        self.context = None
 
     def run(self):
         print("INITIALIZING FSM")
@@ -21,10 +22,17 @@ class FSM:
                 continue
             
             print(f"Running behavior on state {self.current_state.name}")
-            self.current_state.run()
+            self.context = self.current_state.run()
+            print(f"Current context: {self.context}")
+            wait_time = self.current_state.behavior.transition_time
+            
+            if self.current_state.is_final:
+                print("Final state reached!")
+                break
+
             print("Beginning transition")
             self.make_transition()
-            self.current_state.bot.wait(0.5)
+            self.current_state.bot.wait(wait_time)
 
     def make_transition(self):
         for t, transitions in TRANSITIONS.items():
@@ -32,10 +40,10 @@ class FSM:
                 print(f"Entering to transitions for {t}")
                 for condition, transition in transitions.items():
                     print(f"Evaluating whether to transit to {transition}")
-                    print(f"Result of evaluation: {condition(self.current_state.bot)}")
-                    if condition(self.current_state.bot):
+                    print(f"Result of evaluation: {condition(self.current_state.bot, self.context)}")
+                    if condition(self.current_state.bot, self.context):
                         print("Condition met! Transitioning to {}".format(transition))
-                        self.current_state = transition(self.current_state.bot)
+                        self.current_state = transition(self.current_state.bot, context=self.context)
                         return
 
 class AugmentedFSM:
