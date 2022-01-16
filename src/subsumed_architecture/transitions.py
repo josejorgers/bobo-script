@@ -43,8 +43,9 @@ TRANSITIONS = {
     },
 
     MoveToGoal: {
-        lambda bot, context=None: is_obstacle_close(bot): Stop,
-        lambda bot, context: context != None: MoveToGoal,
+        lambda bot, context: is_obstacle_close(bot) and context["blob"].size > 800: Stop,
+        lambda bot, context=None: is_obstacle_close(bot): AvoidCrash,
+        lambda bot, context: context != None : MoveToGoal,
         lambda bot, context=None: True: MoveForward
     }
 }

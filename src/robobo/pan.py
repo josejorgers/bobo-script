@@ -14,3 +14,6 @@ def look_to_the_right_full(bot):
 
 def look_straight(bot, wait=False):
     bot.movePanTo(0, 100, wait=wait)
+
+def adjust_tilt(bot, degree=90, wait=False):
+    bot.moveTiltTo(degree, 40, wait=wait)

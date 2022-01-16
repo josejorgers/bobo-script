@@ -14,7 +14,8 @@ class avoid_crash(BaseBehavior):
         super().__init__(bot)
         self.speed = 20
     
-    def execute(self): # if random_movement == 0:
+    def execute(self):
+        simple_movements.move_backward(self.bot, 10, time=0.5)
         smart_movements.distance_based_turn(self.bot)
 
 class stop_motors(BaseBehavior):

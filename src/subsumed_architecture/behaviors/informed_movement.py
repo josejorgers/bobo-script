@@ -1,6 +1,7 @@
 from subsumed_architecture.behaviors.base import BaseBehavior
 from robobo.movement.simple_movements import turn_left, turn_right, diagonal_movement, move_forward
 from robobo.vision import prepare_exclusive_color_detection, read_color_detection
+from robobo.pan import adjust_tilt
 
 class locate_goal(BaseBehavior):
 
@@ -34,10 +35,18 @@ class move_to_goal(BaseBehavior):
         super().__init__(bot, transition_time=0.2)
         self.color = blob.color
         self.position = blob.posx
+        self.vertical_position = blob.posy
+        self.size = blob.size
 
     def execute(self):
 
+        print(f"Currently target has size {self.size}")
+        
         differential = 50 - self.position
+        
+        if self.vertical_position < 20:
+            curr_tilt_position = self.bot.readTiltPosition()
+            adjust_tilt(self.bot, curr_tilt_position + 10)
 
         if abs(differential) < 8:
             print(f"Goal is straight ahead!: x={self.position}")
