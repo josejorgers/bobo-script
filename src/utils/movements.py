@@ -1,5 +1,5 @@
 from robobo.movement.simple_movements import *
-from constants.sensors_config import DISTANCE_CLOSE, DISTANCE_MEDIUM, DISTANCE_FAR, EDGE_DISTANCE, DISTANCE_TOO_CLOSE
+from constants.sensors_config import DISTANCE_CLOSE, DISTANCE_MEDIUM, DISTANCE_FAR, EDGE_DISTANCE, DISTANCE_TOO_CLOSE, DISTANCE_GOAL_CLOSE
 from robobopy.utils.IR import IR
 
 DIRECTIONS = {
@@ -30,3 +30,6 @@ def is_far_from_edge(robot):
             robot.readIRSensor(IR.FrontR) > EDGE_DISTANCE or\
             robot.readIRSensor(IR.BackL) > EDGE_DISTANCE or\
             robot.readIRSensor(IR.BackR) > EDGE_DISTANCE
+
+def is_goal_close(robot):
+    return robot.readIRSensor(IR.FrontC) > DISTANCE_GOAL_CLOSE

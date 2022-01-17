@@ -40,8 +40,9 @@ class FSM:
                 print(f"Entering to transitions for {t}")
                 for condition, transition in transitions.items():
                     print(f"Evaluating whether to transit to {transition}")
-                    print(f"Result of evaluation: {condition(self.current_state.bot, self.context)}")
-                    if condition(self.current_state.bot, self.context):
+                    evaluation = condition(self.current_state.bot, self.context)
+                    print(f"Result of evaluation: {evaluation}")
+                    if evaluation:
                         print("Condition met! Transitioning to {}".format(transition))
                         self.current_state = transition(self.current_state.bot, context=self.context)
                         return

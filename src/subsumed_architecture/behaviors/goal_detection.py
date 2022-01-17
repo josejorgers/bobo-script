@@ -1,6 +1,7 @@
 from subsumed_architecture.behaviors.base import BaseBehavior
 from robobo.pan import look_straight
 from robobo.vision import prepare_exclusive_color_detection, read_color_detection
+from robobo.movement.simple_movements import stop
 
 class look_for_goal(BaseBehavior):
 
@@ -15,6 +16,7 @@ class look_for_goal(BaseBehavior):
         blob = read_color_detection(self.color, self.bot)
         print(f"Blob detection result: {blob}")
         if blob and blob.size > 0:
+            stop(self.bot)
             self.position = self.bot.readPanPosition()
             look_straight(self.bot)
             self.blob = blob

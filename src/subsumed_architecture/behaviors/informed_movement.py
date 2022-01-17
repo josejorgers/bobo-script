@@ -1,3 +1,4 @@
+from time import time
 from subsumed_architecture.behaviors.base import BaseBehavior
 from robobo.movement.simple_movements import turn_left, turn_right, diagonal_movement, move_forward
 from robobo.vision import prepare_exclusive_color_detection, read_color_detection
@@ -15,14 +16,14 @@ class locate_goal(BaseBehavior):
         self.bot.stopMotors()
 
         if self.position < -40:
-            turn_left(self.bot, 30, 2.5)
+            turn_left(self.bot, 20, 1)
         elif self.position < -10:
-            turn_left(self.bot, 30, 1.5)
+            turn_left(self.bot, 15, 1.5)
         elif self.position > 10 and self.position <= 40:
-            turn_right(self.bot, 30, 1.5)
+            turn_right(self.bot, 15, 1.5)
         elif self.position > 40:
-            turn_right(self.bot, 30, 2.5)
-        
+            turn_right(self.bot, 20, 1)
+
         prepare_exclusive_color_detection(self.color.upper(), self.bot)
 
         blob = read_color_detection(self.color, self.bot)
@@ -32,7 +33,7 @@ class locate_goal(BaseBehavior):
 class move_to_goal(BaseBehavior):
 
     def __init__(self, bot, blob):
-        super().__init__(bot, transition_time=0.2)
+        super().__init__(bot, transition_time=0.1)
         self.color = blob.color
         self.position = blob.posx
         self.vertical_position = blob.posy
@@ -44,27 +45,28 @@ class move_to_goal(BaseBehavior):
         
         differential = 50 - self.position
         
-        if self.vertical_position < 20:
+        if self.vertical_position > 30:
             curr_tilt_position = self.bot.readTiltPosition()
             adjust_tilt(self.bot, curr_tilt_position + 10)
 
-        if abs(differential) < 8:
+        if abs(differential) < 10:
             print(f"Goal is straight ahead!: x={self.position}")
             move_forward(self.bot, 10)
         
         else:
             
             print(f"Moving to goal located at: x={self.position}")
-            if differential > 0:
-                turn_left(self.bot, 3)
+            if differential < 0:
+                turn_left(self.bot, 3, time=0.5)
             else:
-                turn_right(self.bot, 3)
+                turn_right(self.bot, 3, time=0.5)
 
-            self.bot.wait(self.transition_time)
+            # self.bot.wait(self.transition_time)
 
         prepare_exclusive_color_detection(self.color.upper(), self.bot)
 
         blob = read_color_detection(self.color, self.bot)
+        print(f"New blob detection: size={blob.size}, posx={blob.posx}, posy={blob.posy}")
 
         if blob == None or blob.size == 0 or blob.posx == 0:
             return None

@@ -1,5 +1,6 @@
 from subsumed_architecture.behaviors.base import BaseBehavior
 from robobo.movement import smart_movements, simple_movements
+from robobo.pan import adjust_tilt
 
 class move_forward(BaseBehavior):
     def __init__(self, bot, speed=10):
@@ -7,6 +8,7 @@ class move_forward(BaseBehavior):
         self.speed = speed
     
     def execute(self):
+        adjust_tilt(self.bot)
         simple_movements.move_forward(self.bot, self.speed)
 
 class avoid_crash(BaseBehavior):

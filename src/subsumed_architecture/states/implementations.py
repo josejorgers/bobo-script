@@ -2,7 +2,7 @@ from subsumed_architecture.states.base import State, ContextChangerState
 from subsumed_architecture.behaviors.uniformed_movement import move_forward, avoid_crash, stop_motors
 from subsumed_architecture.behaviors.goal_detection import look_for_goal
 from subsumed_architecture.behaviors.informed_movement import locate_goal, move_to_goal
-from robobo.pan import look_to_the_left, look_to_the_left_full, look_to_the_right, look_to_the_right_full
+from robobo.pan import look_to_the_left, look_to_the_left_full, look_to_the_right, look_to_the_right_full, look_straight
 
 class MoveForward(State):
     def __init__(self, bot, context=None):
@@ -12,6 +12,10 @@ class AvoidCrash(State):
     def __init__(self, bot, context=None):
         super().__init__('avoid_crash', avoid_crash(bot), bot)
 
+
+class LookForGoalStraight(ContextChangerState):
+    def __init__(self, bot, context=None):
+        super().__init__('look_for_goal_straight', look_for_goal(bot, look_straight), bot, context)
 class LookForGoalLeft(ContextChangerState):
     def __init__(self, bot, context=None):
         super().__init__('look_for_goal_left', look_for_goal(bot, look_to_the_left), bot, context)
