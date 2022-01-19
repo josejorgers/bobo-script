@@ -4,7 +4,7 @@ from robobo.pan import adjust_tilt
 
 class move_forward(BaseBehavior):
     def __init__(self, bot, speed=10):
-        super().__init__(bot, transition_time=1)
+        super().__init__(bot, transition_time=0.1)
         self.speed = speed
     
     def execute(self):

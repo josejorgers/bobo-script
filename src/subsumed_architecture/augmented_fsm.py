@@ -35,17 +35,18 @@ class FSM:
             self.current_state.bot.wait(wait_time)
 
     def make_transition(self):
-        for t, transitions in TRANSITIONS.items():
-            if isinstance(self.current_state, t):
-                print(f"Entering to transitions for {t}")
-                for condition, transition in transitions.items():
-                    print(f"Evaluating whether to transit to {transition}")
-                    evaluation = condition(self.current_state.bot, self.context)
-                    print(f"Result of evaluation: {evaluation}")
-                    if evaluation:
-                        print("Condition met! Transitioning to {}".format(transition))
-                        self.current_state = transition(self.current_state.bot, context=self.context)
-                        return
+        
+        t = self.current_state.__class__.__name__
+        transitions = TRANSITIONS[t]
+        print(f"Entering to transitions for {t}")
+        for condition, transition in transitions.items():
+            print(f"Evaluating whether to transit to {transition}")
+            evaluation = condition(self.current_state.bot, self.context)
+            print(f"Result of evaluation: {evaluation}")
+            if evaluation:
+                print("Condition met! Transitioning to {}".format(transition))
+                self.current_state = transition(self.current_state.bot, context=self.context)
+                return
 
 class AugmentedFSM:
     def __init__(self, initial_states: list):

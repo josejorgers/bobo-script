@@ -24,6 +24,9 @@ class LookForGoalLeftFull(ContextChangerState):
     def __init__(self, bot, context=None):
         super().__init__('look_for_goal_full_left', look_for_goal(bot, look_to_the_left_full), bot, context)
 
+class LookForGoalLeftReturn(LookForGoalLeft):
+    def __init__(self, bot, context=None):
+        super().__init__(bot, context)
 class LookForGoalRight(ContextChangerState):
     def __init__(self, bot, context=None):
         super().__init__('look_for_goal_right', look_for_goal(bot, look_to_the_right), bot, context)
@@ -31,6 +34,9 @@ class LookForGoalRight(ContextChangerState):
 class LookForGoalRightFull(ContextChangerState):
     def __init__(self, bot, context=None):
         super().__init__('look_for_goal_full_right', look_for_goal(bot, look_to_the_right_full), bot, context)
+class LookForGoalRightReturn(LookForGoalRight):
+    def __init__(self, bot, context=None):
+        super().__init__(bot, context)
 
 class LocateGoal(State):
     def __init__(self, bot, context):

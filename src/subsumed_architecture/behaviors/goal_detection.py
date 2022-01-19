@@ -13,6 +13,7 @@ class look_for_goal(BaseBehavior):
         self.position = None
 
     def termination_condition(self):
+        prepare_exclusive_color_detection(self.color, self.bot)
         blob = read_color_detection(self.color, self.bot)
         print(f"Blob detection result: {blob}")
         if blob and blob.size > 0:
@@ -25,7 +26,6 @@ class look_for_goal(BaseBehavior):
         return False
 
     def execute(self):
-        prepare_exclusive_color_detection(self.color, self.bot)
 
         if not self.termination_condition():
             self.direction_func(self.bot)
@@ -34,4 +34,4 @@ class look_for_goal(BaseBehavior):
                 print("No blob detected")
                 return None
 
-        return {"blob": self.blob, "position": self.position}
+        return {"blob": self.blob, "position": self.position} if self.blob else None
