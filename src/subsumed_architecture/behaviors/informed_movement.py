@@ -61,8 +61,6 @@ class move_to_goal(BaseBehavior):
             else:
                 turn_right(self.bot, 3, time=0.5)
 
-            # self.bot.wait(self.transition_time)
-
         prepare_exclusive_color_detection(self.color.upper(), self.bot)
 
         blob = read_color_detection(self.color, self.bot)
