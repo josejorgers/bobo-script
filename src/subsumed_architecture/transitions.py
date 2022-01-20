@@ -11,7 +11,7 @@ TRANSITIONS = {
     },
     AvoidCrash.__name__: {
         lambda bot, context=None: is_obstacle_close(bot): AvoidCrash,
-        lambda bot, context=None: True: MoveForward
+        lambda bot, context=None: True: Stop, # MoveForward
     },
     LookForGoalStraight.__name__: {
         lambda bot, context=None: is_obstacle_close(bot): AvoidCrash,

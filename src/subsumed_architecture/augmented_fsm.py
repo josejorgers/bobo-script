@@ -53,12 +53,12 @@ class FSM:
                 self.current_state = transition(self.current_state.bot, context=self.context)
                 return
 
-class AugmentedFSM:
-    def __init__(self, initial_states: list):
-        self.subsumed_states = set()
-        self.initial_states = initial_states
+# class AugmentedFSM:
+#     def __init__(self, initial_states: list):
+#         self.subsumed_states = set()
+#         self.initial_states = initial_states
     
-    def run(self):
-        for state in self.initial_states:
-            fsm = FSM(self.subsumed_states, state)
-            fsm.run()
+#     def run(self):
+#         for state in self.initial_states:
+#             fsm = FSM(self.subsumed_states, state)
+#             fsm.run()

@@ -11,5 +11,7 @@ def return_to_start(bot, logs):
     for i in range(len(logs)-1, -1, -1):
         log = logs[i]
         action, params = log["action"], log["params"]
+        print(f"Position: {i}, action: {action}, params: {params}")
 
         action(bot, *params)
+        bot.wait(1)
