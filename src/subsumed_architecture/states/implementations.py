@@ -3,37 +3,48 @@ from subsumed_architecture.behaviors.uniformed_movement import move_forward, avo
 from subsumed_architecture.behaviors.goal_detection import look_for_goal
 from subsumed_architecture.behaviors.informed_movement import locate_goal, move_to_goal
 from robobo.pan import look_to_the_left, look_to_the_left_full, look_to_the_right, look_to_the_right_full, look_straight
+from step_logging import state_logger
 
+@state_logger(move_forward)
 class MoveForward(State):
-    def __init__(self, bot, context=None):
-        super().__init__('move_forward', move_forward(bot), bot)
-
+    def __init__(self, bot, context):
+        super().__init__('move_forward', move_forward(bot), bot, context)
+        
 class AvoidCrash(State):
     def __init__(self, bot, context=None):
-        super().__init__('avoid_crash', avoid_crash(bot), bot)
+        super().__init__('avoid_crash', avoid_crash(bot, context), bot, context)    
 
-
+@state_logger(move_forward)
 class LookForGoalStraight(ContextChangerState):
     def __init__(self, bot, context=None):
         super().__init__('look_for_goal_straight', look_for_goal(bot, look_straight), bot, context)
+
+@state_logger(move_forward)
 class LookForGoalLeft(ContextChangerState):
     def __init__(self, bot, context=None):
         super().__init__('look_for_goal_left', look_for_goal(bot, look_to_the_left), bot, context)
 
+@state_logger(move_forward)
 class LookForGoalLeftFull(ContextChangerState):
     def __init__(self, bot, context=None):
         super().__init__('look_for_goal_full_left', look_for_goal(bot, look_to_the_left_full), bot, context)
 
+@state_logger(move_forward)
 class LookForGoalLeftReturn(LookForGoalLeft):
     def __init__(self, bot, context=None):
         super().__init__(bot, context)
+
+@state_logger(move_forward)
 class LookForGoalRight(ContextChangerState):
     def __init__(self, bot, context=None):
         super().__init__('look_for_goal_right', look_for_goal(bot, look_to_the_right), bot, context)
 
+@state_logger(move_forward)
 class LookForGoalRightFull(ContextChangerState):
     def __init__(self, bot, context=None):
         super().__init__('look_for_goal_full_right', look_for_goal(bot, look_to_the_right_full), bot, context)
+
+@state_logger(move_forward)
 class LookForGoalRightReturn(LookForGoalRight):
     def __init__(self, bot, context=None):
         super().__init__(bot, context)

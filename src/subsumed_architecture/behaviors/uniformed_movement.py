@@ -12,13 +12,13 @@ class move_forward(BaseBehavior):
         simple_movements.move_forward(self.bot, self.speed)
 
 class avoid_crash(BaseBehavior):
-    def __init__(self, bot):
+    def __init__(self, bot, context):
         super().__init__(bot)
-        self.speed = 20
+        self.context = context
     
     def execute(self):
         simple_movements.move_backward(self.bot, 10, time=0.5)
-        smart_movements.distance_based_turn(self.bot)
+        smart_movements.distance_based_turn(self.bot, context=self.context)
 
 class stop_motors(BaseBehavior):
     def __init__(self, bot):

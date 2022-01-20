@@ -9,7 +9,7 @@ robot.connect()
 
 adjust_tilt(robot)
 
-initial_state = MoveForward(robot)
+initial_state = MoveForward(robot, {"logs": []})
 
 state_machine = AugmentedFSM([initial_state])
 

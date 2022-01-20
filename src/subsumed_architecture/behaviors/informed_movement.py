@@ -56,7 +56,7 @@ class move_to_goal(BaseBehavior):
             return None
         
         differential = 50 - self.position
-        center = 10 if self.size > 300 else 40
+        center = 10 if self.size > 10 else 25
         
         if abs(differential) < center:
             print(f"Goal is straight ahead!: x={self.position}")
@@ -66,12 +66,12 @@ class move_to_goal(BaseBehavior):
             turn_speed, turn_time = SLIGHT_TURN
 
             print(f"Moving to goal located at: x={self.position}")
-            if differential > 0:
+            if differential < 0:
                 turn_left(self.bot, turn_speed, turn_time)
             else:
                 turn_right(self.bot, turn_speed, turn_time)
 
-        if self.vertical_position < 30:
+        if self.vertical_position > 30:
             curr_tilt_position = self.bot.readTiltPosition()
             adjust_tilt(self.bot, curr_tilt_position + 10)
 

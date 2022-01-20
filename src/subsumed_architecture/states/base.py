@@ -10,8 +10,20 @@ class State:
 
     def run(self):
         aux = self.behavior()
-        self.context = aux if aux != None else self.context
+        
+        if not aux or not aux['blob']:
+            return self.context
+
+        for k, item in aux.items():
+            self.context[k] = item
+        
         return self.context
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return self.name
 
 class ContextChangerState(State):
 
@@ -19,4 +31,12 @@ class ContextChangerState(State):
         super().__init__(name, behavior, bot, context, is_final)
 
     def run(self):
-        return self.behavior()
+        result = self.behavior()
+
+        if not result:
+            self.context['blob'] = None
+            return self.context
+        
+        self.context['blob'] = result['blob']
+        return self.context
+        

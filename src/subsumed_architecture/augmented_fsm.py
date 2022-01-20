@@ -26,6 +26,11 @@ class FSM:
             print(f"Current context: {self.context}")
             wait_time = self.current_state.behavior.transition_time
             
+            if 'logs' in self.context.keys():
+                print(f"LOGS: {self.context['logs']}")
+            else:
+                print("NO LOGS")
+
             if self.current_state.is_final:
                 print("Final state reached!")
                 break

@@ -34,4 +34,4 @@ class look_for_goal(BaseBehavior):
                 print("No blob detected")
                 return None
 
-        return {"blob": self.blob, "position": self.position} if self.blob else None
+        return {"blob": self.blob, "position": self.position } if self.blob else None
