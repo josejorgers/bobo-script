@@ -5,8 +5,8 @@ def return_to_start(bot, logs):
 
     speed, time = TURN_90_DEGREES
 
-    turn_right(bot, speed, time)
-    turn_right(bot, speed, time)
+    turn_left(bot, speed, time + .6)
+    turn_left(bot, speed, time + .6)
 
     for i in range(len(logs)-1, -1, -1):
         log = logs[i]
@@ -14,4 +14,4 @@ def return_to_start(bot, logs):
         print(f"Position: {i}, action: {action}, params: {params}")
 
         action(bot, *params)
-        bot.wait(1)
+        bot.wait(.11)

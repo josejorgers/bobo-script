@@ -1,6 +1,6 @@
 class BaseBehavior:
 
-    def __init__(self, bot, transition_time=0.5):
+    def __init__(self, bot, transition_time=0.1):
         self.bot = bot
         self.transition_time = transition_time
 

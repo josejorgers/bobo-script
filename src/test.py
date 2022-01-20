@@ -7,10 +7,7 @@ from robobopy.Robobo import Robobo
 robot = Robobo(LOCAL)
 robot.connect()
 
-stop(robot)
+# robot.moveWheelsByTime(30, 30, 2)
 
-# turn_left(robot, TURN_90_DEGREES[0], TURN_90_DEGREES[1])
-
-adjust_tilt(robot)
-
-robot.movePanTo(-80, 30)
+turn_left(robot, TURN_90_DEGREES[0], TURN_90_DEGREES[1])
+turn_left(robot, TURN_90_DEGREES[0], TURN_90_DEGREES[1])

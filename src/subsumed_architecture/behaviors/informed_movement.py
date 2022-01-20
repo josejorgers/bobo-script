@@ -22,18 +22,18 @@ class locate_goal(BaseBehavior):
 
         print(f"Moving to {self.color} goal detected at {self.position}")
         if self.position < -40:
-            inline_log(self.context, turn_right, self.bot, full_speed, full_time)
+            inline_log(self.context, turn_right, self.bot, full_speed, .9)
             turn_left(self.bot, full_speed, full_time)
         elif self.position >= -40 and self.position < 0:
             inline_log(self.context, turn_right, self.bot, mid_speed, mid_time)
             turn_left(self.bot, mid_speed, mid_time)
         elif self.position < 10:
-            pass
+            inline_log(self.context, move_forward, self.bot, 10)
         elif self.position <= 40:
             inline_log(self.context, turn_left, self.bot, mid_speed, mid_time)
             turn_right(self.bot, mid_speed, mid_time)
         elif self.position > 40:
-            inline_log(self.context, turn_left, self.bot, full_speed, full_time)
+            inline_log(self.context, turn_left, self.bot, full_speed, .9)
             turn_right(self.bot, full_speed, full_time)
 
         prepare_exclusive_color_detection(self.color.upper(), self.bot)
@@ -74,14 +74,14 @@ class move_to_goal(BaseBehavior):
             turn_speed, turn_time = SLIGHT_TURN
 
             print(f"Moving to goal located at: x={self.position}")
-            if differential < 0:
+            if differential > 0:
                 inline_log(self.context, turn_right, self.bot, turn_speed, turn_time)
                 turn_left(self.bot, turn_speed, turn_time)
             else:
                 inline_log(self.context, turn_left, self.bot, turn_speed, turn_time)
                 turn_right(self.bot, turn_speed, turn_time)
 
-        if self.vertical_position > 30:
+        if self.vertical_position < 30:
             curr_tilt_position = self.bot.readTiltPosition()
             adjust_tilt(self.bot, curr_tilt_position + 10)
 

@@ -8,7 +8,7 @@ class FSM:
         self.subsumed_states = subsumed_states
         self.current_state = initial_state
         self.context = None
-
+        self.steps = 0
     def run(self):
         print("INITIALIZING FSM")
         
@@ -23,14 +23,17 @@ class FSM:
             
             print(f"Running behavior on state {self.current_state.name}")
             self.context = self.current_state.run()
-            print(f"Current context: {self.context}")
+            # print(f"Current context: {self.context}")
             wait_time = self.current_state.behavior.transition_time
-            
-            if 'logs' in self.context.keys():
-                print(f"LOGS: {self.context['logs']}")
-            else:
-                print("NO LOGS")
 
+            self.steps += 1
+            nlogs = len(self.context['logs'])
+            
+            if self.steps > nlogs:
+                raise Exception(f"Logs are not being added to the context!. Steps: {self.steps} Logs: {nlogs}")
+            
+            print(f"Steps: {self.steps} Logs: {nlogs}")
+            
             if self.current_state.is_final:
                 print("Final state reached!")
                 break
@@ -52,13 +55,3 @@ class FSM:
                 print("Condition met! Transitioning to {}".format(transition))
                 self.current_state = transition(self.current_state.bot, context=self.context)
                 return
-
-# class AugmentedFSM:
-#     def __init__(self, initial_states: list):
-#         self.subsumed_states = set()
-#         self.initial_states = initial_states
-    
-#     def run(self):
-#         for state in self.initial_states:
-#             fsm = FSM(self.subsumed_states, state)
-#             fsm.run()
