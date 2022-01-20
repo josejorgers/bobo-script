@@ -51,12 +51,12 @@ class LookForGoalRightReturn(LookForGoalRight):
 
 class LocateGoal(State):
     def __init__(self, bot, context):
-        super().__init__('locate_goal', locate_goal(bot, context['blob'], context['position']), bot, context=context)
+        super().__init__('locate_goal', locate_goal(bot, context['blob'], context['position'], context), bot, context=context)
 
 class MoveToGoal(ContextChangerState):
     def __init__(self, bot, context):
-        super().__init__('move_to_goal', move_to_goal(bot, context['blob']), bot, context=context)
+        super().__init__('move_to_goal', move_to_goal(bot, context['blob'], context), bot, context=context)
 
 class Stop(State):
     def __init__(self, bot, context=None):
-        super().__init__('stop', stop_motors(bot), bot, is_final=True)
+        super().__init__('stop', stop_motors(bot), bot, context=context, is_final=True)

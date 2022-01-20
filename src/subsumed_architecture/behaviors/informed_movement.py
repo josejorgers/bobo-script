@@ -1,3 +1,4 @@
+from step_logging import inline_log
 from subsumed_architecture.behaviors.base import BaseBehavior
 from robobo.movement.simple_movements import turn_left, turn_right, stop, move_forward
 from robobo.vision import prepare_exclusive_color_detection, read_color_detection
@@ -5,11 +6,12 @@ from robobo.pan import adjust_tilt
 from constants.motion_config import TURN_90_DEGREES, TURN_45_DEGREES, SLIGHT_TURN
 class locate_goal(BaseBehavior):
 
-    def __init__(self, bot, blob, direction, transition_time=0):
+    def __init__(self, bot, blob, direction, context, transition_time=0):
         super().__init__(bot)
         self.transition_time = transition_time
         self.color = blob.color
         self.position = direction
+        self.context = context
 
     def execute(self):
 
@@ -20,14 +22,18 @@ class locate_goal(BaseBehavior):
 
         print(f"Moving to {self.color} goal detected at {self.position}")
         if self.position < -40:
+            inline_log(self.context, turn_right, self.bot, full_speed, full_time)
             turn_left(self.bot, full_speed, full_time)
         elif self.position >= -40 and self.position < 0:
+            inline_log(self.context, turn_right, self.bot, mid_speed, mid_time)
             turn_left(self.bot, mid_speed, mid_time)
         elif self.position < 10:
             pass
         elif self.position <= 40:
+            inline_log(self.context, turn_left, self.bot, mid_speed, mid_time)
             turn_right(self.bot, mid_speed, mid_time)
         elif self.position > 40:
+            inline_log(self.context, turn_left, self.bot, full_speed, full_time)
             turn_right(self.bot, full_speed, full_time)
 
         prepare_exclusive_color_detection(self.color.upper(), self.bot)
@@ -41,12 +47,13 @@ class locate_goal(BaseBehavior):
 
 class move_to_goal(BaseBehavior):
 
-    def __init__(self, bot, blob):
+    def __init__(self, bot, blob, context):
         super().__init__(bot, transition_time=0.1)
         self.color = blob.color
         self.position = blob.posx
         self.vertical_position = blob.posy
         self.size = blob.size
+        self.context = context
 
     def execute(self):
 
@@ -60,6 +67,7 @@ class move_to_goal(BaseBehavior):
         
         if abs(differential) < center:
             print(f"Goal is straight ahead!: x={self.position}")
+            inline_log(self.context, move_forward, self.bot, 10)
             move_forward(self.bot, 10)
         
         else:
@@ -67,8 +75,10 @@ class move_to_goal(BaseBehavior):
 
             print(f"Moving to goal located at: x={self.position}")
             if differential < 0:
+                inline_log(self.context, turn_right, self.bot, turn_speed, turn_time)
                 turn_left(self.bot, turn_speed, turn_time)
             else:
+                inline_log(self.context, turn_left, self.bot, turn_speed, turn_time)
                 turn_right(self.bot, turn_speed, turn_time)
 
         if self.vertical_position > 30:

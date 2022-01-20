@@ -38,5 +38,7 @@ class ContextChangerState(State):
             return self.context
         
         self.context['blob'] = result['blob']
+        self.context['position'] = result['position']
+        
         return self.context
         
