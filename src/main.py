@@ -16,11 +16,11 @@ state_machine = FSM(set(), initial_state)
 
 state_machine.run()
 
-logs = state_machine.context['logs']
+# logs = state_machine.context['logs']
 
-print("RETURNING!!!")
+# print("RETURNING!!!")
 
-print(len(logs))
-return_to_start(robot, logs)
+# print(len(logs))
+# return_to_start(robot, logs)
 
-robot.stopMotors()
+# robot.stopMotors()
