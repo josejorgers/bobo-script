@@ -74,14 +74,14 @@ class move_to_goal(BaseBehavior):
             turn_speed, turn_time = SLIGHT_TURN
 
             print(f"Moving to goal located at: x={self.position}")
-            if differential > 0:
+            if differential < 0:
                 inline_log(self.context, turn_right, self.bot, turn_speed, turn_time)
                 turn_left(self.bot, turn_speed, turn_time)
             else:
                 inline_log(self.context, turn_left, self.bot, turn_speed, turn_time)
                 turn_right(self.bot, turn_speed, turn_time)
 
-        if self.vertical_position < 30:
+        if self.vertical_position > 30:
             curr_tilt_position = self.bot.readTiltPosition()
             adjust_tilt(self.bot, curr_tilt_position + 10)
 

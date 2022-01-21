@@ -15,11 +15,6 @@ class FSM:
         while True:
             print("==========================================================")
             print(f"Current state: {self.current_state.name}")
-
-            if self.current_state.name in self.subsumed_states:
-                print("Current state is subsumed!")
-                self.make_transition()
-                continue
             
             print(f"Running behavior on state {self.current_state.name}")
             self.context = self.current_state.run()
@@ -29,8 +24,8 @@ class FSM:
             self.steps += 1
             nlogs = len(self.context['logs'])
             
-            if self.steps > nlogs:
-                raise Exception(f"Logs are not being added to the context!. Steps: {self.steps} Logs: {nlogs}")
+            # if self.steps > nlogs:
+            #     raise Exception(f"Logs are not being added to the context!. Steps: {self.steps} Logs: {nlogs}")
             
             print(f"Steps: {self.steps} Logs: {nlogs}")
             
